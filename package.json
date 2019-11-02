@@ -1,0 +1,17 @@
+{
+  "name": "weboscktbackend",
+  "version": "1.0.0",
+  "description": "Back-end application in the IoT Hub quickstart device-to-cloud sample",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthias",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/event-hubs": "^1.0.7",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0"
+  }
+}

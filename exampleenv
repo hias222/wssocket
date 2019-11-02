@@ -1,0 +1,5 @@
+// Using the Azure CLI:
+// az iot hub show-connection-string --hub-name {YourIoTHubName} --policy-name service  --output table
+AZURE_CONNECT_STRING = '{Your service connection string here}';
+
+# The connect string can be found in visual studio code on ... copy IoT connect string
