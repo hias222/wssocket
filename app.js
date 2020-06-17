@@ -4,6 +4,8 @@ const socketIo = require("socket.io");
 const port = 8080;
 const index = require("./routes/index");
 
+const senddatahub = require("./outgoing/senddatahub")
+
 const staticbasemessage = "Kinderschwimmen 2019\\n \
                           Live Timing\\n \
                           09.11.2019\\n \
@@ -111,6 +113,7 @@ function storeBaseData(message) {
     }
 
     if (jsonmessage.type == "stop") {
+      sendDataHub();
       start = jsonmessage
     }
 
@@ -138,6 +141,12 @@ function storeBaseData(message) {
     console.log("<app.js> error")
     console.log(err)
   }
+}
+
+function sendDataHub() {
+  console.log("send to datahub")
+  var newmessage = { ...headermessage, lanes: lanemessages }
+  senddatahub.sendHeat(newmessage)
 }
 
 function sendBaseData(socket) {
