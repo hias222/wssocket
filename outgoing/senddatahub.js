@@ -6,7 +6,9 @@ const sendHeat = (jsondaata) => {
 
     console.log(JSON.stringify(jsondaata))
 
-    fetch('http://localhost:3000/api/heat/add', {
+    var connectionString = process.env.AZURE_DATAHUB_URL !== undefined ? process.env.AZURE_DATAHUB_URL : 'http://localhost:3000'
+
+    fetch(connectionString + '/api/heat/add', {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json'
