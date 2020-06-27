@@ -29,6 +29,7 @@ var headermessage = {
 var start = { type: 'start' };
 var laststart = Date.now();
 var timestart = Date.now();
+var running = false;
 
 var printError = function (err) {
   console.log(err.message);
@@ -115,6 +116,7 @@ function storeBaseData(message) {
     if (jsonmessage.type == "stop") {
       sendDataHub();
       start = jsonmessage
+      running = false
     }
 
     if (jsonmessage.type == "clock") {
@@ -136,6 +138,7 @@ function storeBaseData(message) {
       var lanenumber = (jsonmessage.lane - 1)
       var number_of_elements_to_remove = 1
       lanemessages.splice(lanenumber, number_of_elements_to_remove, jsonmessage);
+      running = true
     }
   } catch (err) {
     console.log("<app.js> error")
@@ -149,7 +152,7 @@ function sendDataHub() {
   senddatahub.sendHeat(newmessage)
 }
 
-function sendBaseData(socket) {
+async function sendBaseData(socket) {
   // we need io.sockets.socket();
   try {
 
@@ -187,6 +190,12 @@ function sendBaseData(socket) {
         var newmessage = { ...start, ...JSON.parse(jsondiff) }
         socket.emit("FromAPI", JSON.stringify(newmessage));
         console.log("other message " + start.type)
+        if (running) {
+          var racemessage = "{\"type\":\"race\"}"
+          var sendracemessage = JSON.parse(racemessage)
+          socket.emit("FromAPI", JSON.stringify(sendracemessage))
+          console.log("send race maybe " + timediff)
+        }
       }
     }
 
